@@ -2,16 +2,23 @@
 all: build
 
 # La règle pour construire l'exécutable
-build: main.o affichage.o
-		gcc -o build main.o affichage.o
+build: main.o affichage.o graph.o
+		gcc -o build main.o affichage.o graph.o
+		rm -f *.o
 
 # Règle pour compiler affichage.o
 affichage.o: affichage.c affichage.h
 		gcc -c affichage.c -o affichage.o
 
+
+graph.o: graph.c graph.h
+		gcc -c graph.c -o graph.o
+
+
 # Règle pour compiler main.o
 main.o: main.c affichage.h
 		gcc -c main.c -o main.o
+
 
 # Règle pour nettoyer les fichiers .o et l'exécutable
 clean:
