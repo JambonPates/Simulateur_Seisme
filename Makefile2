@@ -1,0 +1,31 @@
+# La cible principale
+ALL: build
+
+# La règle pour build
+build: main.o meteo.o bataille.o fourmilière.o culture.o
+		gcc -o build main.o meteo.o bataille.o fourmilière.o culture.o
+		rm -f *.o
+
+# Règle pour compiler meteo.o
+meteo.o: meteo.h meteo.c
+		gcc -o meteo.o -c meteo.c
+
+# Règle pour compiler bataille.o
+bataille.o: combat_statsfourmis.h combat_statsfourmis.c
+		gcc -o bataille.o -c combat_statsfourmis.c
+
+# Règle pour compiler fourmilière.o
+fourmilière.o: fourmilière.c fourmilière.h
+		gcc -o fourmilière.o -c fourmilière.c
+
+# Règle pour compiler culture.o
+culture.o: culture.c culture.h
+		gcc -o culture.o -c culture.c
+
+# Règle pour compiler main.o
+main.o: main.c
+		gcc -o main.o -c main.c
+
+# Règle pour nettoyer les fichiers .o et build
+clean:
+		rm -f *.o build

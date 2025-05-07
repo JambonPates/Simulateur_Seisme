@@ -1,19 +1,18 @@
-# La cible principale
-ALL: build
+# La cible par défaut
+all: build
 
-# La règle pour build
-build: main.o affichage.o 
+# La règle pour construire l'exécutable
+build: main.o affichage.o
 		gcc -o build main.o affichage.o
-		rm -f *.o
 
 # Règle pour compiler affichage.o
-meteo.o: affichage.h affichage.c
-		gcc -o affichage.o -c affichage.c
+affichage.o: affichage.c affichage.h
+		gcc -c affichage.c -o affichage.o
 
 # Règle pour compiler main.o
-main.o: main.c
-		gcc -o main.o -c main.c
+main.o: main.c affichage.h
+		gcc -c main.c -o main.o
 
-# Règle pour nettoyer les fichiers .o et build
+# Règle pour nettoyer les fichiers .o et l'exécutable
 clean:
 		rm -f *.o build
