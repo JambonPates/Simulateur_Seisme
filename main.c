@@ -18,12 +18,14 @@ int main(){
 
     int sommet_depart = 0;
 
-    afficherRoutes(Map);
-    afficherCheminsAccessibles(Map, sommet_depart);
-    afficherSommetsInaccessibles(Map, sommet_depart);
+    //afficherRoutes(Map);
+    //afficherCheminsAccessibles(Map, sommet_depart);
+    //afficherSommetsInaccessibles(Map, sommet_depart);
+    parcoursEnProfondeur(Map, true);
     faireSeisme(Map);
     //afficherRoutes(Map);
-    afficherSommetsInaccessibles(Map, sommet_depart);
+    //afficherSommetsInaccessibles(Map, sommet_depart);
+    parcoursEnProfondeur(Map, true);
 
     freeGraph(Map);
 

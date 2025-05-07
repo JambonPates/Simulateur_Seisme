@@ -113,12 +113,21 @@ void afficherCheminsAccessibles(matrice* Map, int depart){
 void afficherSommetsInaccessibles(matrice* Map, int depart){
 
     printf("\n--- Sommets inaccessibles depuis le sommet %d ---\n", depart);
-/*
-    for (int i = 0; i < Map->nbSommet; i++) {
-        route r = Map->Adajacente[depart][i];
-        if (r.existe && r.etat != 0 && r.capacite > 0) {
+
+    int inaccessible = 1;
+
+    for (int i = 1; i < Map->nbSommet; i++) {
+        for (int j = 0; j < i; j++){
+            if (Map->Adajacente[i][j].existe != 0 || Map->Adajacente[i][j].etat > 0){
+                inaccessible = 0;
+            }
         }
-    }*/
+        if (inaccessible){
+            printf("Le Sommet %d est inaccessible\n", i);
+            inaccessible = 1;
+        }
+        
+    }
 }
 
 
@@ -136,6 +145,65 @@ void faireSeisme(matrice* Map){
     }
 
 }
+
+
+void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
+
+    bool* visites = malloc(Map->nbSommet * sizeof(bool));
+
+    if (visites == NULL){
+        printf("Erreur d'allocation tableau marquage\n");
+        exit(-1);
+    }
+
+    for (int i = 0; i < Map->nbSommet; i++){
+        visites[i] = false;
+    }
+
+    int* pile = malloc(Map->nbSommet * sizeof(int));
+
+    if (pile == NULL){
+        printf("Erreur d'allocation pile\n");
+        free(visites);
+        exit(-1);
+    }
+
+    int sommetTop = 0;  
+    pile[sommetTop++] = 0; 
+
+    printf("\n--- Parcours en profondeur ---\n");
+
+    while (sommetTop > 0){
+
+        int courant = pile[--sommetTop]; 
+
+        if (!visites[courant]){
+
+            visites[courant] = true;
+            printf("Visite du sommet %d\n", courant);
+
+            for (int i = Map->nbSommet - 1; i >= 0; i--) {
+                if (Map->Adajacente[courant][i].existe && Map->Adajacente[courant][i].etat > 0 && !visites[i]) {
+                    pile[sommetTop++] = i; // empile le voisin
+                }
+            }
+        }
+
+    }
+
+    if (afficherSommetInaccessible){
+
+        for (int i = 0; i < Map->nbSommet; i++){
+            if (visites[i] == false){
+                printf("Le sommet %d n'est pas accessiblle depuis le sommet début\n", i);
+            }
+        }
+    }
+
+    free(visites);
+    free(pile);
+}
+
 
 
 void freeGraph(matrice* Map){
