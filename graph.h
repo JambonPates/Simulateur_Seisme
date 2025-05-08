@@ -22,17 +22,14 @@ typedef struct{
     int nbSommet;
 } matrice;
 
-typedef struct {
-    int type;
-    int capacite;
-} vehicule;
 
-
+//--------------------- Fonctions ------------------------
 
 matrice* CreateGraph(int* size);
 void afficherRoutes(matrice* Map);
 void afficherCheminsAccessibles(matrice* Map, int depart);
 void afficherSommetsInaccessibles(matrice* Map, int depart);
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible);
+void parcoursEnLargeur(matrice* Map);
 void faireSeisme(matrice* Map);
 void freeGraph(matrice* Map);

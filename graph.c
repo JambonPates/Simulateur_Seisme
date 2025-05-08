@@ -100,11 +100,9 @@ void afficherCheminsAccessibles(matrice* Map, int depart){
     
     for (int i = 0; i < Map->nbSommet; i++){
 
-        route r = Map->Adajacente[depart][i];
+        if (Map->Adajacente[depart][i].existe && Map->Adajacente[depart][i].etat != 0 && Map->Adajacente[depart][i].capacite > 0){
 
-        if (r.existe && r.etat != 0 && r.capacite > 0){
-
-            printf("  -> %d (Distance: %d, Capacité: %d, etat: %d)\n", i, r.distance, r.capacite, r.etat);
+            printf("  -> %d (Distance: %d, Capacité: %d, etat: %d)\n", i, Map->Adajacente[depart][i].distance, Map->Adajacente[depart][i].capacite, Map->Adajacente[depart][i].etat);
         }
     }
 
@@ -180,7 +178,7 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
         if (!visites[courant]){
 
             visites[courant] = true;
-            printf("Visite du sommet %d\n", courant);
+            //printf("sommet %d\n", courant);
 
             for (int i = Map->nbSommet - 1; i >= 0; i--) {
                 if (Map->Adajacente[courant][i].existe && Map->Adajacente[courant][i].etat > 0 && !visites[i]) {
@@ -204,6 +202,16 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
     free(pile);
 }
 
+
+void parcoursEnLargeur(matrice* Map){
+
+
+}
+
+
+void identificationRoutesImportantes(matrice* Map){
+
+}
 
 
 void freeGraph(matrice* Map){

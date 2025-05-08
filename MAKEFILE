@@ -2,8 +2,9 @@
 all: build
 
 # La règle pour construire l'exécutable
-build: main.o affichage.o graph.o
-		gcc -o build main.o affichage.o graph.o
+build: main.o affichage.o graph.o vehicules.o
+		gcc -o build main.o affichage.o graph.o vehicules.o
+
 		rm -f *.o
 
 # Règle pour compiler affichage.o
@@ -13,6 +14,10 @@ affichage.o: affichage.c affichage.h
 
 graph.o: graph.c graph.h
 		gcc -c graph.c -o graph.o
+
+
+vehicules.o: vehicules.c vehicules.h
+		gcc -c vehicules.c -o vehicules.o
 
 
 # Règle pour compiler main.o

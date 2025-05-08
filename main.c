@@ -1,6 +1,7 @@
 #include <time.h>
 #include "graph.h"
 
+#define TailleGraph 10
 
 
 //-------------------------------------------------------------------------//
@@ -8,7 +9,7 @@
 int main(){
     srand(time(NULL)); 
 
-    int taille = 50;
+    int taille = TailleGraph;
     matrice* Map = CreateGraph(&taille);
 
     if (Map == NULL) {
@@ -21,11 +22,11 @@ int main(){
     //afficherRoutes(Map);
     //afficherCheminsAccessibles(Map, sommet_depart);
     //afficherSommetsInaccessibles(Map, sommet_depart);
-    parcoursEnProfondeur(Map, true);
-    faireSeisme(Map);
+    //parcoursEnProfondeur(Map, true);
+    //faireSeisme(Map);
     //afficherRoutes(Map);
     //afficherSommetsInaccessibles(Map, sommet_depart);
-    parcoursEnProfondeur(Map, true);
+    //parcoursEnProfondeur(Map, true);
 
     freeGraph(Map);
 
