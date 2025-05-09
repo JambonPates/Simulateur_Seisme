@@ -31,5 +31,8 @@ void afficherCheminsAccessibles(matrice* Map, int depart);
 void afficherSommetsInaccessibles(matrice* Map, int depart);
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible);
 void parcoursEnLargeur(matrice* Map, bool afficherArcs);
+void identificationRoutesImportantes(matrice* Map);
+int detecterCycle(int* parents, int nbSommet, bool* cycle);
+void trouverArcsEntrantsMin(matrice* Map, int racine, int* parents);
 void faireSeisme(matrice* Map);
 void freeGraph(matrice* Map);

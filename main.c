@@ -26,8 +26,9 @@ int main(){
     //faireSeisme(Map);
     //afficherRoutes(Map);
     //afficherSommetsInaccessibles(Map, sommet_depart);
-    parcoursEnProfondeur(Map, true);
-    parcoursEnLargeur(Map, true);
+    //parcoursEnProfondeur(Map, true);
+    //parcoursEnLargeur(Map, true);
+    identificationRoutesImportantes(Map);
 
     freeGraph(Map);
 

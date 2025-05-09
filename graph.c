@@ -270,18 +270,60 @@ void parcoursEnLargeur(matrice* Map, bool afficherArcs){
 }
 
 
-
+// Algo de Chu-Liu/Edmonds
 void identificationRoutesImportantes(matrice* Map){
 
+    int* parents = malloc(Map->nbSommet * sizeof(int));
+
+    for (int i = 0; i < Map->nbSommet; i++){
+
+        if (i == 0){
+            parents[i] = -1;
+            continue;
+        }
+
+        int minPoids = 100;
+        int parent = -1;
+
+        for (int j = 0; j < Map->nbSommet; j++){
+
+            if (Map->Adajacente[j][i].existe && Map->Adajacente[j][i].etat > 0 && Map->Adajacente[j][i].distance < minPoids){
+
+                minPoids = Map->Adajacente[j][i].distance;
+                parent = j;
+
+            }
+
+        }
+        parents[i] = parent;
+
+    }
+
+
+    printf("Arborescence de poids minimal :\n");
+
+    for (int i = 0; i < Map->nbSommet; i++){
+
+        if (parents[i] != -1){
+            printf("%d -> %d (poids : %d)\n", parents[i], i, Map->Adajacente[parents[i]][i].distance);
+        }
+
+    }
+
+    free(parents);    
+    
 }
 
 
 void freeGraph(matrice* Map){
 
-    for (int i = 0; i < Map->nbSommet; i++) {
+    for (int i = 0; i < Map->nbSommet; i++){
+
         free(Map->Adajacente[i]);
+        
     }
 
     free(Map->Adajacente);
     free(Map);
+
 }
