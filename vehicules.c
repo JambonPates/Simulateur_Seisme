@@ -1,92 +1,70 @@
 #include "vehicules.h"
 
 
-//-------------------------------------------------------------------------//
-
-vehicule* creerListeVehicule(int quantite){
-
-    if (quantite == 0){
-        return NULL;
-    }
-
-    vehicule* tete;
-    tete = (vehicule*)malloc(sizeof(vehicule));
-
-    if(tete == NULL){
-
-        printf("Erreur Alloc liste vehicules\n");
+tete* creerListeVehicule(int quantite) {
+    tete* pListe = malloc(sizeof(tete));
+    if (pListe == NULL) {
+        printf("Erreur allocation tête\n");
         exit(-1);
-
     }
 
-    tete->capacite = capacitePompier;
-    tete->type = 1;
-    tete->suivant = NULL;
+    pListe->adresse = NULL;
 
-    if(quantite > 1){
+    if (quantite <= 0)
+        return pListe;
 
-        vehicule* vehiculeCourant = tete;
+    vehicule* premier = malloc(sizeof(vehicule));
+    if (premier == NULL) {
+        printf("Erreur allocation premier véhicule\n");
+        exit(-1);
+    }
 
-        for (int i = 1; i < quantite; i++){
-            vehicule* newVehicule = (vehicule*)malloc(sizeof(vehicule));
+    premier->type = 1;
+    premier->capacite = capacitePompier;
+    premier->suivant = NULL;
+    pListe->adresse = premier;
 
-            if(newVehicule != NULL){
-
-                newVehicule->capacite = capacitePompier;
-                newVehicule->type = 1;
-                newVehicule->suivant = NULL;
-
-                vehiculeCourant->suivant = newVehicule;
-                newVehicule = NULL;
-            }
-            else{
-                printf("Erreur Allocation NewVehicule\n");
-                exit(-1);
-            }
-
+    vehicule* courant = premier;
+    for (int i = 1; i < quantite; i++) {
+        vehicule* nv = malloc(sizeof(vehicule));
+        if (nv == NULL) {
+            printf("Erreur allocation véhicule\n");
+            exit(-1);
         }
+
+        nv->type = 1;
+        nv->capacite = capacitePompier;
+        nv->suivant = NULL;
+
+        courant->suivant = nv;
+        courant = nv;
     }
-    
 
-    return tete;
-
+    return pListe;
 }
 
-
-void afficherListeVehicule(vehicule* liste){
-
+void afficherListeVehicule(tete* liste) {
     printf("Liste des Véhicules :\n\n");
-
-    while(liste != NULL){
-
-        printf("Type : %d, capacite : %d\n", liste->type, liste->capacite);
+    vehicule* courant = liste->adresse;
+    while (courant != NULL) {
+        printf("Type : %d, capacite : %d\n", courant->type, courant->capacite);
+        courant = courant->suivant;
     }
 }
 
-
-void freeVehicules(vehicule* liste){
-
-    if (liste != NULL){
-        vehicule* tete = liste;
-        liste = liste->suivant;
-
-        while(tete != NULL){
-            free(tete);
-            tete = liste;
-            liste = liste->suivant;
-
-        }
-        
+void freeVehicules(tete* liste) {
+    vehicule* courant = liste->adresse;
+    while (courant != NULL) {
+        vehicule* tmp = courant;
+        courant = courant->suivant;
+        free(tmp);
     }
+    free(liste); // libère la tête aussi
 }
 
-/*
-int main(){
-
-    vehicule* maListe;
-    maListe = creerListeVehicule(5);
+int main() {
+    tete* maListe = creerListeVehicule(5);
     afficherListeVehicule(maListe);
-    free(maListe);
-
+    freeVehicules(maListe);
     return 0;
-}*/
+}

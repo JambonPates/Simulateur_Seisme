@@ -10,19 +10,23 @@
 
 //--------------------- Structures ------------------------
 
-typedef struct {
+typedef struct vehicule {
     int type;
     int capacite;
-    vehicule* suivant;
+    struct vehicule* suivant;
 } vehicule;
 
-typedef struct vehicules* vehicules;
+typedef struct {
+    vehicule* adresse;
+} tete;
+
+
 
 //enum typeVehicule : {"Pompier", "Ambulance", "Ravitaillement"};
 
 
 //--------------------- Fonctions ------------------------
 
-vehicule* creerListeVehicule(int quantite);
-void afficherListeVehicule(vehicule* liste);
-void freeVehicules(vehicule* liste);
+tete* creerListeVehicule(int quantite);
+void afficherListeVehicule(tete* liste);
+void freeVehicules(tete* liste);
