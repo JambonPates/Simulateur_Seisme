@@ -182,7 +182,7 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
 
             for (int i = Map->nbSommet - 1; i >= 0; i--) {
                 if (Map->Adajacente[courant][i].existe && Map->Adajacente[courant][i].etat > 0 && !visites[i]) {
-                    pile[sommetTop++] = i; // empile le voisin
+                    pile[sommetTop++] = i; 
                 }
             }
         }
@@ -203,10 +203,72 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
 }
 
 
-void parcoursEnLargeur(matrice* Map){
+void parcoursEnLargeur(matrice* Map, bool afficherArcs){
 
+    bool* visites = malloc(Map->nbSommet * sizeof(bool));
+
+    if (visites == NULL){
+
+        printf("Erreur d'allocation pour visites\n");
+        exit(-1);
+
+    }
+
+    for (int i = 0; i < Map->nbSommet; i++){
+
+        visites[i] = false;
+
+    }
+
+    int* file = malloc(Map->nbSommet * sizeof(int));
+
+    if (file == NULL){
+
+        printf("Erreur d'allocation pour file\n");
+        free(visites);
+        exit(-1);
+
+    }
+
+    int debut = 0;
+    int fin = 0;
+
+    file[fin] = 0;  
+    fin++;
+    visites[0] = true;
+
+    printf("\n--- Parcours en largeur ---\n");
+
+    while (debut < fin){
+
+        int courant = file[debut];
+        debut++;
+        //printf("Sommet %d\n", courant);
+
+        for (int i = 0; i < Map->nbSommet; i++){
+
+            if (Map->Adajacente[courant][i].existe && Map->Adajacente[courant][i].etat > 0 && Map->Adajacente[courant][i].capacite > 0 && !visites[i]){
+
+                if (afficherArcs){
+
+                    printf("  Arc parcouru : %d -> %d (Distance: %d, Capacité: %d, État: %d)\n", courant, i, Map->Adajacente[courant][i].distance, Map->Adajacente[courant][i].capacite, Map->Adajacente[courant][i].etat);
+                
+                }
+
+                file[fin] = i;  
+                fin++;
+                visites[i] = true;
+
+            }
+        }
+    }
+
+
+    free(visites);
+    free(file);
 
 }
+
 
 
 void identificationRoutesImportantes(matrice* Map){

@@ -88,9 +88,9 @@ void freeVehicules(tete* liste){
     free(liste); 
 }
 
-int main() {
-    tete* maListe = creerListeVehicule(5);
-    afficherListeVehicule(maListe);
-    freeVehicules(maListe);
-    return 0;
-}
+// int main() {
+//     tete* maListe = creerListeVehicule(5);
+//     afficherListeVehicule(maListe);
+//     freeVehicules(maListe);
+//     return 0;
+// }

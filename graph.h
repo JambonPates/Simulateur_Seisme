@@ -30,6 +30,6 @@ void afficherRoutes(matrice* Map);
 void afficherCheminsAccessibles(matrice* Map, int depart);
 void afficherSommetsInaccessibles(matrice* Map, int depart);
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible);
-void parcoursEnLargeur(matrice* Map);
+void parcoursEnLargeur(matrice* Map, bool afficherArcs);
 void faireSeisme(matrice* Map);
 void freeGraph(matrice* Map);
