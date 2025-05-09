@@ -22,7 +22,7 @@ typedef struct {
 
 
 
-//enum typeVehicule : {"Pompier", "Ambulance", "Ravitaillement"};
+enum typeVehicule {Pompier = 1, Ambulance = 2, Ravitaillement = 3};
 
 
 //--------------------- Fonctions ------------------------
