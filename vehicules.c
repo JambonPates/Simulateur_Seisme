@@ -21,6 +21,10 @@ tete* creerListeVehicule(int quantite){
     }
         
 
+    for (int i = 0; i  < 10; i++){
+        
+    }
+
     // ajout des véhucles
     vehicule* premier = malloc(sizeof(vehicule));
 
