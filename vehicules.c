@@ -2,7 +2,9 @@
 
 
 tete* creerListeVehicule(int quantite){
+    //Créer la liste chgainée et remplie si besoin
 
+    // création de la tête 
     tete* pListe = malloc(sizeof(tete));
 
     if (pListe == NULL){
@@ -19,6 +21,7 @@ tete* creerListeVehicule(int quantite){
     }
         
 
+    // ajout des véhucles
     vehicule* premier = malloc(sizeof(vehicule));
 
     if (premier == NULL){ 
@@ -58,6 +61,7 @@ tete* creerListeVehicule(int quantite){
 
 
 void afficherListeVehicule(tete* liste){
+    // Affiche tous les véhicules de la liste
 
     printf("Liste des Véhicules :\n\n");
 
@@ -74,6 +78,7 @@ void afficherListeVehicule(tete* liste){
 
 
 void freeVehicules(tete* liste){
+    // Libère toutes les allocations du aux véhicules
 
     vehicule* courant = liste->adresse;
 

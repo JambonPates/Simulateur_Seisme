@@ -27,8 +27,7 @@ typedef struct{
 
 matrice* CreateGraph(int* size);
 void afficherRoutes(matrice* Map);
-void afficherCheminsAccessibles(matrice* Map, int depart);
-void afficherSommetsInaccessibles(matrice* Map, int depart);
+void afficherSommetsInaccessibles(matrice* Map);
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible);
 void parcoursEnLargeur(matrice* Map, bool afficherArcs);
 void identificationRoutesImportantes(matrice* Map);

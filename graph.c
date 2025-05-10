@@ -3,7 +3,9 @@
 //-------------------------------------------------------------------------//
 
 matrice* CreateGraph(int* size){
+    // Création et remplissage du graph 
 
+    //Création
     matrice* Map = malloc(sizeof(matrice));
 
     if (Map == NULL) {
@@ -23,6 +25,7 @@ matrice* CreateGraph(int* size){
 
     }
     
+    // Ajout des routes
     for (int i = 0; i < *size; i++){
 
         Map->Adajacente[i] = malloc(*size * sizeof(route));
@@ -51,6 +54,7 @@ matrice* CreateGraph(int* size){
     }
 
     for (int i = 0; i < *size; i++){
+        //Géneration aléatoire des informations
 
         int nbVoisins = rand() % 5; 
 
@@ -75,6 +79,7 @@ matrice* CreateGraph(int* size){
 
 
 void afficherRoutes(matrice* Map){
+    // Affiche toutes les routes du graph
 
     printf("\n--- Affichage des routes existantes ---\n");
 
@@ -93,34 +98,24 @@ void afficherRoutes(matrice* Map){
 }
 
 
-void afficherCheminsAccessibles(matrice* Map, int depart){
+void afficherSommetsInaccessibles(matrice* Map){
+    // Affiche tous les sommets inaccessibles
 
-    printf("\n--- Chemins accessibles depuis le sommet %d ---\n", depart);
-
-    
-    for (int i = 0; i < Map->nbSommet; i++){
-
-        if (Map->Adajacente[depart][i].existe && Map->Adajacente[depart][i].etat != 0 && Map->Adajacente[depart][i].capacite > 0){
-
-            printf("  -> %d (Distance: %d, Capacité: %d, etat: %d)\n", i, Map->Adajacente[depart][i].distance, Map->Adajacente[depart][i].capacite, Map->Adajacente[depart][i].etat);
-        }
-    }
-
-}
-
-void afficherSommetsInaccessibles(matrice* Map, int depart){
-
-    printf("\n--- Sommets inaccessibles depuis le sommet %d ---\n", depart);
+    printf("\n--- Sommets inaccessibles depuis le sommet 0 ---\n");
 
     int inaccessible = 1;
 
-    for (int i = 1; i < Map->nbSommet; i++) {
+    for (int i = 1; i < Map->nbSommet; i++){
+
         for (int j = 0; j < i; j++){
+
             if (Map->Adajacente[i][j].existe != 0 || Map->Adajacente[i][j].etat > 0){
                 inaccessible = 0;
             }
         }
+
         if (inaccessible){
+
             printf("Le Sommet %d est inaccessible\n", i);
             inaccessible = 1;
         }
@@ -130,6 +125,7 @@ void afficherSommetsInaccessibles(matrice* Map, int depart){
 
 
 void faireSeisme(matrice* Map){
+    // Fonction qui détruit les routes de façon aléatoire
 
     for (int i = 0; i < Map->nbSommet; i++){
         for (int j = 0; j < Map->nbSommet; j++){
@@ -167,13 +163,15 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
     }
 
     int sommetTop = 0;  
-    pile[sommetTop++] = 0; 
+    pile[sommetTop] = 0;
+    sommetTop++; 
 
     printf("\n--- Parcours en profondeur ---\n");
 
     while (sommetTop > 0){
 
-        int courant = pile[--sommetTop]; 
+        sommetTop--;
+        int courant = pile[sommetTop]; 
 
         if (!visites[courant]){
 
@@ -190,6 +188,7 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
     }
 
     if (afficherSommetInaccessible){
+        // Affichage si demandé
 
         for (int i = 0; i < Map->nbSommet; i++){
             if (visites[i] == false){
@@ -204,6 +203,7 @@ void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
 
 
 void parcoursEnLargeur(matrice* Map, bool afficherArcs){
+    // Parcours en largeur, pour afficher les arcs parcourus mettre le bool à True
 
     bool* visites = malloc(Map->nbSommet * sizeof(bool));
 
@@ -211,7 +211,6 @@ void parcoursEnLargeur(matrice* Map, bool afficherArcs){
 
         printf("Erreur d'allocation pour visites\n");
         exit(-1);
-
     }
 
     for (int i = 0; i < Map->nbSommet; i++){
@@ -250,8 +249,9 @@ void parcoursEnLargeur(matrice* Map, bool afficherArcs){
             if (Map->Adajacente[courant][i].existe && Map->Adajacente[courant][i].etat > 0 && Map->Adajacente[courant][i].capacite > 0 && !visites[i]){
 
                 if (afficherArcs){
+                    //affichage des arcs si demandé
 
-                    printf("  Arc parcouru : %d -> %d (Distance: %d, Capacité: %d, État: %d)\n", courant, i, Map->Adajacente[courant][i].distance, Map->Adajacente[courant][i].capacite, Map->Adajacente[courant][i].etat);
+                    printf("Arc parcouru : %d -> %d\n", courant, i);
                 
                 }
 
@@ -284,7 +284,8 @@ void identificationRoutesImportantes(matrice* Map){
 
         int minPoids = 100;
         int parent = -1;
-
+        
+        // On cherche pour chaque sommet l'arc entrant avec le poids le plus faible et on l'enregistre
         for (int j = 0; j < Map->nbSommet; j++){
 
             if (Map->Adajacente[j][i].existe && Map->Adajacente[j][i].etat > 0 && Map->Adajacente[j][i].distance < minPoids){
@@ -316,6 +317,7 @@ void identificationRoutesImportantes(matrice* Map){
 
 
 void freeGraph(matrice* Map){
+    //Libération de toutes les allocations dynamiques du graph
 
     for (int i = 0; i < Map->nbSommet; i++){
 

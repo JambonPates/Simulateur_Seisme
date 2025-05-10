@@ -21,7 +21,6 @@ typedef struct {
 } tete;
 
 
-
 enum typeVehicule {Pompier = 1, Ambulance = 2, Ravitaillement = 3};
 
 
