@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 // DFS= Parcours en profondeur LowLink= La connexion vers l element le plus petit disponible
 #define MAX_VERTICES 5  // Nombre maximum de sommets dans le graphe
 
