@@ -28,7 +28,8 @@ int main(){
     //afficherSommetsInaccessibles(Map, sommet_depart);
     //parcoursEnProfondeur(Map, true);
     //parcoursEnLargeur(Map, true);
-    identificationRoutesImportantes(Map);
+    //identificationRoutesImportantes(Map);
+    ComposantesFortementConnexes(Map);
 
     freeGraph(Map);
 

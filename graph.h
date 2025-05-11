@@ -31,5 +31,7 @@ void afficherSommetsInaccessibles(matrice* Map);
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible);
 void parcoursEnLargeur(matrice* Map, bool afficherArcs);
 void identificationRoutesImportantes(matrice* Map);
+void ComposantesFortementConnexes(matrice* Map);
 void faireSeisme(matrice* Map);
+void ResetSurbrillance(matrice* Map)
 void freeGraph(matrice* Map);

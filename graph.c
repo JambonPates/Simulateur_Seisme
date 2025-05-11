@@ -141,6 +141,153 @@ void faireSeisme(matrice* Map){
 }
 
 
+void ComposantesFortementConnexes(matrice* Map){
+
+    int n = Map->nbSommet;
+
+    bool* visite = calloc(n, sizeof(bool));
+    int* pile = malloc(n * sizeof(int));
+    int sommetPile = 0;
+
+    if (!visite || !pile){
+
+        printf("Erreur d'allocation mémoire\n");
+        exit(-1);
+
+    }
+
+
+    // --------------------- 1er DFS : remplir la pile par ordre de fin ---------------------
+
+    for (int v = 0; v < n; v++){
+
+        if (!visite[v]){
+            
+            int* stack = malloc(n * sizeof(int));
+            int top = 0;
+            int* next = calloc(n, sizeof(int));
+
+            stack[top] = v;
+            top += 1;
+
+            while (top > 0){
+
+                int u = stack[top - 1];
+
+                if (!visite[u]){
+
+                    visite[u] = true;
+                }
+
+                bool pushed = false;
+
+                for (; next[u] < n; next[u]++){
+
+                    int w = next[u];
+
+                    if (Map->Adajacente[u][w].existe && Map->Adajacente[u][w].etat > 0 && !visite[w]){
+
+                        stack[top] = w;
+                        top+= 1;
+                        pushed = true;
+                        break;
+
+                    }
+                }
+
+                if (!pushed){
+
+                    pile[sommetPile] = u;
+                    sommetPile++;
+                    top--;
+
+                }
+            }
+
+            free(stack);
+            free(next);
+        }
+    }
+
+    // --------------------- Transposer du graphe ---------------------
+    route** transpose = malloc(n * sizeof(route*));
+
+    for (int i = 0; i < n; i++){
+
+        transpose[i] = malloc(n * sizeof(route));
+
+        for (int j = 0; j < n; j++){
+
+            transpose[i][j].existe = Map->Adajacente[j][i].existe;
+            transpose[i][j].etat = Map->Adajacente[j][i].etat;
+        }
+
+    }
+
+    // --------------------- 2e DFS sur le graphe transposé ---------------------
+    for (int i = 0; i < n; i++){
+
+        visite[i] = false;
+    } 
+
+    printf("\n--- Composantes Fortement Connexes (Kosaraju) ---\n");
+
+    while (sommetPile > 0){
+
+        sommetPile--;
+        int v = pile[sommetPile];
+
+        if (!visite[v]){
+
+            int* stack = malloc(n * sizeof(int));
+            int top = 0;
+
+            stack[top] = v;
+            top++;
+            visite[v] = true;
+
+            printf("CFC : ");
+
+            while (top > 0){
+
+                top--;
+                int u = stack[top];
+
+                printf("%d ", u);
+
+                for (int w = 0; w < n; w++){
+
+                    if (transpose[u][w].existe && transpose[u][w].etat > 0 && !visite[w]) {
+                        stack[top] = w;
+                        top++;
+                        visite[w] = true;
+                    }
+
+                }
+            }
+
+            printf("\n");
+            free(stack);
+
+        }
+    }
+
+    
+    for (int i = 0; i < n; i++){ 
+
+        free(transpose[i]);
+
+    }
+
+    free(transpose);
+    free(visite);
+    free(pile);
+
+}
+
+
+
+
 void parcoursEnProfondeur(matrice* Map, bool afficherSommetInaccessible){
 
     bool* visites = malloc(Map->nbSommet * sizeof(bool));
@@ -313,6 +460,19 @@ void identificationRoutesImportantes(matrice* Map){
 
     free(parents);    
     
+}
+
+
+void ResetSurbrillance(matrice* Map){
+    // Reset toutes les arretes à surbrillance = False
+
+    for (int i = 0; i < Map->nbSommet; i++){
+        
+        for (int j = 0; j < Map->nbSommet; j++){
+
+            Map->Adajacente[i][j].surbrillance = false;
+        }
+    }
 }
 
 
