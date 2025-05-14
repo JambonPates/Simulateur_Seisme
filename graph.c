@@ -462,6 +462,83 @@ void identificationRoutesImportantes(matrice* Map){
     
 }
 
+/*
+
+void dijkstra(matrice* graph, int source) {
+    int n = graph->nbSommet;
+    
+    int* distances = malloc(n * sizeof(int));
+    bool* visited = calloc(n, sizeof(bool));
+    int* pred = malloc(n * sizeof(int));
+
+    if(distances == NULL || visited == NULL || pred == NULL) {
+        printf("Erreur allocation\n");
+        free(distances);
+        free(visited);
+        free(pred);
+        return;
+    }
+
+    for(int i = 0; i < n; i++) {
+        distances[i] = INT_MAX;
+        pred[i] = -1;
+    }
+    distances[source] = 0;
+
+    for(int count = 0; count < n - 1; count++) {
+        int u = -1;
+        int min_dist = INT_MAX;
+        
+        for(int v = 0; v < n; v++) {
+            if(visited[v] == 0 && distances[v] < min_dist) {
+                min_dist = distances[v];
+                u = v;
+            }
+        }
+
+        if(u == -1) break;
+
+        visited[u] = 1;
+
+        for(int v = 0; v < n; v++) {
+            if(graph->Adjacente[u][v].existe && graph->Adjacente[u][v].etat > 0) {
+                int new_dist = distances[u] + graph->Adjacente[u][v].distance;
+                if(new_dist < distances[v]) {
+                    distances[v] = new_dist;
+                    pred[v] = u;
+                }
+            }
+        }
+    }
+
+    printf("Resultats depuis %d:\n", source);
+    for(int i = 0; i < n; i++) {
+        if(distances[i] == INT_MAX) {
+            printf("%d: inaccessible\n", i);
+            continue;
+        }
+        
+        printf("%d: distance=%d, chemin=", i, distances[i]);
+        
+        int current = i;
+        int path[n], len = 0;
+        
+        while(current != -1) {
+            path[len++] = current;
+            current = pred[current];
+        }
+        
+        for(int j = len - 1; j >= 0; j--) {
+            printf("%d", path[j]);
+            if(j > 0) printf("->");
+        }
+        printf("\n");
+    }
+
+    free(distances);
+    free(visited);
+    free(pred);
+}*/
 
 void ResetSurbrillance(matrice* Map){
     // Reset toutes les arretes à surbrillance = False

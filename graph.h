@@ -33,5 +33,6 @@ void parcoursEnLargeur(matrice* Map, bool afficherArcs);
 void identificationRoutesImportantes(matrice* Map);
 void ComposantesFortementConnexes(matrice* Map);
 void faireSeisme(matrice* Map);
+//void dijkstra(matrice* graph, int source);
 void ResetSurbrillance(matrice* Map);
 void freeGraph(matrice* Map);
