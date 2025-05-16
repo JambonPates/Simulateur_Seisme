@@ -462,9 +462,9 @@ void identificationRoutesImportantes(matrice* Map){
     
 }
 
-/*
-
 void dijkstra(matrice* graph, int source) {
+
+    printf("\n--- Arbre du plus court chemin (Dijkstra) ---\n");
     int n = graph->nbSommet;
     
     int* distances = malloc(n * sizeof(int));
@@ -501,8 +501,8 @@ void dijkstra(matrice* graph, int source) {
         visited[u] = 1;
 
         for(int v = 0; v < n; v++) {
-            if(graph->Adjacente[u][v].existe && graph->Adjacente[u][v].etat > 0) {
-                int new_dist = distances[u] + graph->Adjacente[u][v].distance;
+            if(graph->Adajacente[u][v].existe && graph->Adajacente[u][v].etat > 0) {
+                int new_dist = distances[u] + graph->Adajacente[u][v].distance;
                 if(new_dist < distances[v]) {
                     distances[v] = new_dist;
                     pred[v] = u;
@@ -511,7 +511,7 @@ void dijkstra(matrice* graph, int source) {
         }
     }
 
-    printf("Resultats depuis %d:\n", source);
+    printf("Le plus court chemin :\n");
     for(int i = 0; i < n; i++) {
         if(distances[i] == INT_MAX) {
             printf("%d: inaccessible\n", i);
@@ -538,7 +538,7 @@ void dijkstra(matrice* graph, int source) {
     free(distances);
     free(visited);
     free(pred);
-}*/
+}
 
 void ResetSurbrillance(matrice* Map){
     // Reset toutes les arretes à surbrillance = False

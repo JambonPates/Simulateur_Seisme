@@ -30,6 +30,7 @@ int main(){
     //parcoursEnLargeur(Map, true);
     //identificationRoutesImportantes(Map);
     ComposantesFortementConnexes(Map);
+    dijkstra(Map, 0);
 
     freeGraph(Map);
 
